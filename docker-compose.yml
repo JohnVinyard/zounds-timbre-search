@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  zounds:
+    build: ./zounds
+    image: zounds
+
+  timbre:
+    build: ./timbre
+    depends_on:
+      - zounds
+    ports:
+      - "8888"
+
+  nginx:
+    build: ./nginx
+    depends_on:
+      - timbre
+    links:
+      - timbre:timbre
+    ports:
+      - "80:80"
